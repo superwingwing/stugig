@@ -32,11 +32,12 @@ watchEffect(() => {
     :text="props.formSuccessMessage"
     title="Success!"
     type="success"
-    variant="tonal"
+    variant="flat"
     density="compact"
     border="start"
     closable
-    color="green-darken-4"
+    color="green-lighten-1"
+    class="font-semibold"
   >
   </v-alert>
 
@@ -46,11 +47,12 @@ watchEffect(() => {
     :text="props.formErrorMessage"
     title="Oops! Error!"
     type="error"
-    variant="tonal"
+    variant="flat"
     density="compact"
     border="start"
     closable
-    color="deep-orange-accent-4"
+    color="red-lighten-1"
+    class="font-semibold"
   >
   </v-alert>
 </template>

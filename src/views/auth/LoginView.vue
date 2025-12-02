@@ -9,43 +9,46 @@ const { mobile } = useDisplay()
 <template>
   <AppLayout>
     <template #content>
-      <v-row class="d-flex align-center justify-center">
-        <v-col cols="12" lg="8" v-if="!mobile">
-          <v-img class="mx-auto" src="/images/login.svg" width="800"></v-img>
-        </v-col>
+      <div class="flex items-center justify-center w-full px-4">
+        <v-row class="w-full max-w-6xl items-center justify-center">
+          <v-col cols="12" lg="6" v-if="!mobile" class="hidden lg:flex items-center justify-center">
+            <v-img class="mx-auto drop-shadow-2xl" src="/images/login.svg" max-width="500"></v-img>
+          </v-col>
 
-        <v-col cols="12" lg="4" :class="mobile ? '' : 'pt-16'">
-          <v-card class="blur-card mx-auto" elevation="16">
-            <v-card-title class="text-center">
-              <v-img class="mx-auto" src="/images/logo.png" :width="mobile ? '60%' : '30%'"></v-img>
-              <h3 class="text-orange-lighten-5 font-weight-black">WELCOME</h3>
-            </v-card-title>
+          <v-col cols="12" lg="6" class="flex items-center justify-center">
+            <div class="blur-card w-full max-w-md">
+              <!-- Logo -->
+              <div class="text-center pt-4 pb-2">
+                <v-img class="mx-auto mb-3" src="/images/logo.png" :width="mobile ? '100' : '80'"></v-img>
+                <h1 class="text-2xl font-bold text-white tracking-wide">WELCOME BACK</h1>
+                <p class="text-xs text-gray-200 mt-1">Sign in to continue to CSULF</p>
+              </div>
 
-            <v-card-text>
-              <v-divider class="my-5"></v-divider>
+              <!-- Form -->
+              <div class="px-6 pb-6">
+                <LoginForm></LoginForm>
 
-              <!-- Call LoginForm -->
-              <LoginForm class="ma-4"></LoginForm>
-
-              <h5 class="text-white text-center">
-                Don't have an account?
-                <RouterLink class="text-orange-lighten-3" to="register">
-                  Register Here!
-                </RouterLink>
-              </h5>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
+                <p class="text-xs text-center text-gray-100 mt-4">
+                  Don't have an account?
+                  <RouterLink class="text-orange-300 hover:text-orange-200 font-semibold transition-colors" to="register">
+                    Register Here
+                  </RouterLink>
+                </p>
+              </div>
+            </div>
+          </v-col>
+        </v-row>
+      </div>
     </template>
   </AppLayout>
 </template>
 
 <style scoped>
 .blur-card {
-  backdrop-filter: blur(1px);
-  background-color: rgba(145, 179, 136, 0.555);
-  border-radius: 16px;
-  overflow: hidden;
+  backdrop-filter: blur(12px);
+  background: rgba(30, 58, 32, 0.75);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 </style>

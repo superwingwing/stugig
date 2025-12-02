@@ -85,80 +85,157 @@ const onFormSubmit = () => {
     :form-error-message="formAction.formErrorMessage"
   ></AlertNotification>
 
-  <v-form class="mt-5 ma-4" ref="refVForm" fast-fail @submit.prevent="onFormSubmit">
-    <v-text-field
-      color="green-darken-3"
-      bg-color="green-lighten-3"
-      rounded
-      v-model="formData.firstname"
-      label="Firstname"
-      variant="solo-filled"
-      :rules="[requiredValidator]"
-    ></v-text-field>
-    <v-text-field
-      color="green-darken-3"
-      bg-color="green-lighten-3"
-      rounded
-      v-model="formData.lastname"
-      label="Lastname"
-      variant="solo-filled"
-      :rules="[requiredValidator]"
-    ></v-text-field>
-    <v-text-field
-      color="green-darken-3"
-      bg-color="green-lighten-3"
-      rounded
-      v-model="formData.facebook_link"
-      label="Facebook Link"
-      variant="solo-filled"
-      :rules="[requiredValidator]"
-    ></v-text-field>
-    <v-text-field
-      color="green-darken-3"
-      bg-color="green-lighten-3"
-      rounded
-      v-model="formData.email"
-      label="Email"
-      :rules="[requiredValidator, emailValidator]"
-      variant="solo-filled"
-    ></v-text-field>
-    <v-text-field
-      color="green-darken-3"
-      bg-color="green-lighten-3"
-      rounded
-      v-model="formData.password"
-      :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-      :type="visible ? 'text' : 'password'"
-      label="Password"
-      variant="solo-filled"
-      @click:append-inner="visible = !visible"
-      :rules="[requiredValidator, passwordValidator]"
-    ></v-text-field>
-    <v-text-field
-      color="green-darken-3"
-      bg-color="green-lighten-3"
-      rounded
-      v-model="formData.passwordConfirmation"
-      :append-inner-icon="isVisible ? 'mdi-eye-off' : 'mdi-eye'"
-      :type="isVisible ? 'text' : 'password'"
-      label="Password Confirmation"
-      variant="solo-filled"
-      @click:append-inner="isVisible = !isVisible"
-      :rules="[
-        requiredValidator,
-        confirmedValidator(formData.passwordConfirmation, formData.password)
-      ]"
-    ></v-text-field>
+  <v-form class="space-y-2 mt-3" ref="refVForm" fast-fail @submit.prevent="onFormSubmit">
+    <!-- Name Fields Row -->
+    <div class="grid grid-cols-2 gap-2">
+      <div>
+        <label class="block text-xs font-medium text-gray-200 mb-1">First Name</label>
+        <v-text-field
+          color="green-darken-2"
+          bg-color="rgba(255, 255, 255, 0.9)"
+          rounded="lg"
+          v-model="formData.firstname"
+          placeholder="First name"
+          variant="solo"
+          density="compact"
+          :rules="[requiredValidator]"
+          hide-details="auto"
+          class="modern-input"
+        ></v-text-field>
+      </div>
+      <div>
+        <label class="block text-xs font-medium text-gray-200 mb-1">Last Name</label>
+        <v-text-field
+          color="green-darken-2"
+          bg-color="rgba(255, 255, 255, 0.9)"
+          rounded="lg"
+          v-model="formData.lastname"
+          placeholder="Last name"
+          variant="solo"
+          density="compact"
+          :rules="[requiredValidator]"
+          hide-details="auto"
+          class="modern-input"
+        ></v-text-field>
+      </div>
+    </div>
+
+    <!-- Facebook Link -->
+    <div>
+      <label class="block text-xs font-medium text-gray-200 mb-1">Facebook Profile</label>
+      <v-text-field
+        color="green-darken-2"
+        bg-color="rgba(255, 255, 255, 0.9)"
+        rounded="lg"
+        v-model="formData.facebook_link"
+        placeholder="Facebook profile link"
+        variant="solo"
+        density="compact"
+        :rules="[requiredValidator]"
+        hide-details="auto"
+        class="modern-input"
+      ></v-text-field>
+    </div>
+
+    <!-- Email -->
+    <div>
+      <label class="block text-xs font-medium text-gray-200 mb-1">Email Address</label>
+      <v-text-field
+        color="green-darken-2"
+        bg-color="rgba(255, 255, 255, 0.9)"
+        rounded="lg"
+        v-model="formData.email"
+        placeholder="Enter your email"
+        :rules="[requiredValidator, emailValidator]"
+        variant="solo"
+        density="compact"
+        hide-details="auto"
+        class="modern-input"
+      ></v-text-field>
+    </div>
+
+    <!-- Password -->
+    <div>
+      <label class="block text-xs font-medium text-gray-200 mb-1">Password</label>
+      <v-text-field
+        color="green-darken-2"
+        bg-color="rgba(255, 255, 255, 0.9)"
+        rounded="lg"
+        v-model="formData.password"
+        :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+        :type="visible ? 'text' : 'password'"
+        placeholder="Create password"
+        variant="solo"
+        density="compact"
+        @click:append-inner="visible = !visible"
+        :rules="[requiredValidator, passwordValidator]"
+        hide-details="auto"
+        class="modern-input"
+      ></v-text-field>
+    </div>
+
+    <!-- Confirm Password -->
+    <div>
+      <label class="block text-xs font-medium text-gray-200 mb-1">Confirm Password</label>
+      <v-text-field
+        color="green-darken-2"
+        bg-color="rgba(255, 255, 255, 0.9)"
+        rounded="lg"
+        v-model="formData.passwordConfirmation"
+        :append-inner-icon="isVisible ? 'mdi-eye-off' : 'mdi-eye'"
+        :type="isVisible ? 'text' : 'password'"
+        placeholder="Confirm password"
+        variant="solo"
+        density="compact"
+        @click:append-inner="isVisible = !isVisible"
+        :rules="[
+          requiredValidator,
+          confirmedValidator(formData.passwordConfirmation, formData.password)
+        ]"
+        hide-details="auto"
+        class="modern-input"
+      ></v-text-field>
+    </div>
+
+    <!-- Sign Up Button -->
     <v-btn
-      rounded
-      class="mt-2 font-weight-black"
-      size="x-large"
+      rounded="lg"
+      class="mt-4 text-sm font-semibold shadow-lg hover:shadow-xl transition-all"
+      size="default"
       type="submit"
       block
-      color="orange-darken-3"
+      color="#e65100"
       :disabled="formAction.formProcess"
       :loading="formAction.formProcess"
-      >Sign up</v-btn
+      elevation="4"
     >
+      Create Account
+    </v-btn>
   </v-form>
 </template>
+
+<style scoped>
+.modern-input :deep(.v-field) {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+}
+
+.modern-input :deep(.v-field:hover) {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.modern-input :deep(.v-field--focused) {
+  box-shadow: 0 4px 12px -1px rgba(76, 175, 80, 0.3);
+}
+
+/* Bright red error messages */
+.modern-input :deep(.v-messages__message) {
+  color: #ff1744 !important;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.modern-input :deep(.v-field--error) {
+  box-shadow: 0 0 0 2px rgba(255, 57, 96, 0.8);
+}
+</style>

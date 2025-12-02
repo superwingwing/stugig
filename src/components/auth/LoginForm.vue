@@ -182,58 +182,110 @@ const onGoogleSignIn = async () => {
     :form-error-message="formAction.formErrorMessage"
   ></AlertNotification>
 
-  <v-form class="mt-5 ma-4" ref="refVForm" fast-fail @submit.prevent="onFormSubmit">
-    <v-text-field
-      color="green-darken-3"
-      bg-color="green-lighten-3"
-      rounded
-      v-model="formData.email"
-      label="Email"
-      :rules="[requiredValidator, emailValidator]"
-      variant="solo-filled"
-    ></v-text-field>
+  <v-form class="space-y-3 mt-3" ref="refVForm" fast-fail @submit.prevent="onFormSubmit">
+    <!-- Email Field -->
+    <div>
+      <label class="block text-xs font-medium text-gray-200 mb-1">Email Address</label>
+      <v-text-field
+        color="green-darken-2"
+        bg-color="rgba(255, 255, 255, 0.9)"
+        rounded="lg"
+        v-model="formData.email"
+        placeholder="Enter your email"
+        :rules="[requiredValidator, emailValidator]"
+        variant="solo"
+        density="compact"
+        hide-details="auto"
+        class="modern-input"
+      ></v-text-field>
+    </div>
 
-    <v-text-field
-      color="green-darken-3"
-      bg-color="green-lighten-3"
-      v-model="formData.password"
-      rounded
-      :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-      :type="visible ? 'text' : 'password'"
-      label="Password"
-      variant="solo-filled"
-      @click:append-inner="visible = !visible"
-      :rules="[requiredValidator]"
-    ></v-text-field>
+    <!-- Password Field -->
+    <div>
+      <label class="block text-xs font-medium text-gray-200 mb-1">Password</label>
+      <v-text-field
+        color="green-darken-2"
+        bg-color="rgba(255, 255, 255, 0.9)"
+        v-model="formData.password"
+        rounded="lg"
+        :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+        :type="visible ? 'text' : 'password'"
+        placeholder="Enter your password"
+        variant="solo"
+        density="compact"
+        @click:append-inner="visible = !visible"
+        :rules="[requiredValidator]"
+        hide-details="auto"
+        class="modern-input"
+      ></v-text-field>
+    </div>
+
+    <!-- Sign In Button -->
     <v-btn
-      rounded=""
-      class="mt-2 font-weight-black"
-      size="x-large"
+      rounded="lg"
+      class="mt-4 text-sm font-semibold shadow-lg hover:shadow-xl transition-all"
+      size="default"
       type="submit"
       block
-      color="orange-darken-3"
+      color="#e65100"
       :loading="formAction.formProcess"
-      >Sign in</v-btn
+      elevation="4"
     >
-    <!-- <h4 class="text-center">OR</h4> -->
-    <v-divider class="my-5"><h4 class="text-white">or</h4></v-divider>
+      Sign In
+    </v-btn>
+
+    <!-- Divider -->
+    <div class="relative my-4">
+      <div class="absolute inset-0 flex items-center">
+        <div class="w-full border-t-2" style="border-color: #e5e7eb !important;"></div>
+      </div>
+      <div class="relative flex justify-center text-xs">
+        <span class="px-3 bg-[rgba(30,58,32)] text-gray-200 font-medium">or continue with</span>
+      </div>
+    </div>
+
+    <!-- Google Sign In Button -->
     <v-btn
-      rounded
-      class="mt-2 font-weight-medium text-capitalize google-btn"
-      size="x-large"
+      rounded="lg"
+      class="text-xs font-medium border-2 shadow-md hover:shadow-lg transition-all"
+      size="default"
       block
-      color="grey-lighten-4"
+      color="white"
+      variant="flat"
       @click="onGoogleSignIn"
     >
       <img
         src="/images/google.png"
         alt="Google logo"
-        style="height: 24px; width: 24px"
-        class="me-2"
+        class="w-4 h-4 mr-2"
       />
-      <p class="py-1 font-weight-medium">Continue with Google</p>
+      <span class="text-gray-700">Continue with Google</span>
     </v-btn>
-
-    <v-divider class="my-5"></v-divider>
   </v-form>
 </template>
+
+<style scoped>
+.modern-input :deep(.v-field) {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+}
+
+.modern-input :deep(.v-field:hover) {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.modern-input :deep(.v-field--focused) {
+  box-shadow: 0 4px 12px -1px rgba(76, 175, 80, 0.3);
+}
+
+/* Bright red error messages */
+.modern-input :deep(.v-messages__message) {
+  color: #ff1744 !important;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.modern-input :deep(.v-field--error) {
+  box-shadow: 0 0 0 2px rgba(255, 57, 96, 0.8);
+}
+</style>
