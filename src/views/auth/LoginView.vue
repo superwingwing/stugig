@@ -20,7 +20,7 @@ const { mobile } = useDisplay()
               <!-- Logo -->
               <div class="text-center pt-4 pb-2">
                 <v-img class="mx-auto mb-3" src="/images/logo.png" :width="mobile ? '100' : '80'"></v-img>
-                <h1 class="text-2xl font-bold text-white tracking-wide">WELCOME BACK</h1>
+                <h1 class="text-2xl font-bold text-white tracking-wide">WELCOME</h1>
                 <p class="text-xs text-gray-200 mt-1">Sign in to continue to CSULF</p>
               </div>
 

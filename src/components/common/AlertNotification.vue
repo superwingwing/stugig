@@ -37,7 +37,7 @@ watchEffect(() => {
     border="start"
     closable
     color="green-lighten-1"
-    class="font-semibold"
+    class="text-sm font-semibold"
   >
   </v-alert>
 
@@ -52,7 +52,7 @@ watchEffect(() => {
     border="start"
     closable
     color="red-lighten-1"
-    class="font-semibold"
+    class="text-sm font-semibold"
   >
   </v-alert>
 </template>

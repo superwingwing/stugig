@@ -156,19 +156,33 @@ onMounted(() => {
     <br />
     <br />
     <v-row justify="center">
-      <v-col cols="12" sm="8" md="8">
+      <v-col cols="12">
         <v-card
-          class="rounded-xl mb-4 text-light-green-darken-3"
-          max-width="1000"
-          elevation="4"
-          :title="`Hello ${firstName && lastName ? firstName + ' ' + lastName : full_name || 'Guest'}!`"
-          subtitle="Found Something?"
+          class="create-post-card rounded-xl mb-4 overflow-hidden"
+          elevation="2"
         >
-          <v-card-actions class="mx-auto">
-            <v-btn class="rounded-pill bg-light-green-darken-3" block @click="showModal = true">
-              Post Now!
+          <div class="pa-5">
+            <div class="d-flex align-center mb-3">
+              <v-icon size="32" color="green-darken-3" class="mr-3">mdi-lightbulb-on</v-icon>
+              <div>
+                <h2 class="text-h6 text-green-darken-3 font-weight-bold mb-0">
+                  Hello {{ firstName && lastName ? firstName + ' ' + lastName : full_name || 'Guest' }}!
+                </h2>
+                <p class="text-body-2 text-grey-darken-1 mb-0">Found something? Help others find their belongings</p>
+              </div>
+            </div>
+            <v-btn
+              class="rounded-lg font-weight-bold text-white"
+              color="green-darken-3"
+              size="large"
+              prepend-icon="mdi-plus-circle"
+              block
+              elevation="0"
+              @click="showModal = true"
+            >
+              Create Post
             </v-btn>
-          </v-card-actions>
+          </div>
         </v-card>
       </v-col>
     </v-row>

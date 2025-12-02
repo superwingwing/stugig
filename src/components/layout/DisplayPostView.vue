@@ -123,82 +123,85 @@ window.addEventListener('profile-updated', fetchPostsWithUsers)
   <v-container>
     <!-- Post List -->
     <v-row dense>
-      <v-col cols="12" sm="8" md="6" v-for="post in postsWithUsers" :key="post.post_id">
+      <v-col cols="12" v-for="post in postsWithUsers" :key="post.post_id">
         <v-card
-          class="mb-4 rounded-xl"
-          max-width="4000"
-          outlined
-          elevation="10"
-          link
+          class="post-card rounded-xl mb-4 overflow-hidden"
+          elevation="3"
           @click="showDetails(post)"
         >
-              <v-list-item class="pb-3">
-                      <v-row class="w-100" align="center" no-gutters>
-                        <!-- Post Owner Image -->
-                        <v-col cols="auto">
-                              <v-avatar size="50" class="mx-2" color="black">
-                                  <!-- Check if profile_pic exists and is not null or empty -->
-                                  <v-img
-                                    v-if="post.profile_pic && post.profile_pic !== ''"
-                                    :src="post.profile_pic.startsWith('http') ? post.profile_pic : profileUrl + post.profile_pic"
-                                    alt="User Avatar and default profile"
-                                    class="mx-auto"
-                                    height="200"
-                                    width="200"
-                                  />
-                                  
-                                  <!-- Fallback image if profile_pic is not available -->
-                                  <v-img
-                                    v-else
-                                    :src="post.avatar_url || 'default-avatar-url.png'"
-                                    alt="google profile"
-                                    class="mx-auto"
-                                    height="200"
-                                    width="200"
-                                  />
-                             </v-avatar>                        
-                        </v-col>
-
-                        <!-- Post Owner Name -->
-                        <v-col class="d-flex align-center">
-                          <v-list-item-content>
-                            <h3 class="text-light-green-darken-3 font-weight-bold pa-1">
-                                {{ post.firstname && post.lastname ? post.firstname + ' ' + post.lastname : post.full_name }}
-                            </h3>
-                          </v-list-item-content>
-                        </v-col>
-                      </v-row>
-                </v-list-item>
+          <!-- Post Header -->
+          <div class="post-header pa-4 d-flex align-center">
+            <v-avatar size="56" class="mr-3 elevation-2">
+              <v-img
+                v-if="post.profile_pic && post.profile_pic !== ''"
+                :src="post.profile_pic.startsWith('http') ? post.profile_pic : profileUrl + post.profile_pic"
+                alt="User Avatar"
+                cover
+              />
+              <v-img
+                v-else
+                :src="post.avatar_url || 'default-avatar-url.png'"
+                alt="Google profile"
+                cover
+              />
+            </v-avatar>
+            <div>
+              <h3 class="text-green-darken-3 font-weight-bold text-subtitle-1 mb-0">
+                {{ post.firstname && post.lastname ? post.firstname + ' ' + post.lastname : post.full_name }}
+              </h3>
+              <p class="text-caption text-grey-darken-1 mb-0">Found an item</p>
+            </div>
+          </div>
 
           <!-- Post Image -->
           <v-img
             v-if="post.image"
-            height="200"
             :src="`https://ndmbunubneumkuadlylz.supabase.co/storage/v1/object/public/items/${post.image}`"
-            cover
             :alt="post.item_name || 'Post Image'"
+            cover
+            class="post-image"
+            height="400"
           />
-          <v-card-title class="text-light-green-darken-3">{{ post.item_name }}</v-card-title>
-          <v-card-subtitle class="text-light-green-darken-3">{{
-            post.description
-          }}</v-card-subtitle>
-          <v-card-actions>
+
+          <!-- Post Content -->
+          <div class="pa-4">
+            <h2 class="text-h6 text-green-darken-3 font-weight-bold mb-2">{{ post.item_name }}</h2>
+            <p class="text-body-2 text-grey-darken-2 mb-3">{{ post.description }}</p>
+          </div>
+
+          <!-- Post Actions -->
+          <v-divider></v-divider>
+          <v-card-actions class="pa-3">
             <v-btn
-              :color="isSaved(post.post_id) ? 'grey' : 'blue'"
+              :color="isSaved(post.post_id) ? 'grey' : 'green-darken-2'"
               :disabled="isSaved(post.post_id)"
-              prepend-icon="mdi-bookmark-outline"
+              variant="flat"
+              prepend-icon="mdi-bookmark"
+              rounded="lg"
+              size="default"
+              class="font-weight-medium"
               @click.stop="savePost(post.post_id)"
             >
               {{ isSaved(post.post_id) ? 'Saved' : 'Save' }}
             </v-btn>
-            <v-btn color="primary" class="text-center" :href="post.facebook_link" target="_blank" rel="noopener"
-              >Send Message</v-btn>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="orange-darken-2"
+              variant="flat"
+              prepend-icon="mdi-facebook-messenger"
+              rounded="lg"
+              size="default"
+              class="font-weight-medium"
+              :href="post.facebook_link"
+              target="_blank"
+              rel="noopener"
+            >
+              Contact Owner
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
-    </v-row>
-
-    <!-- Success Modal -->
+    </v-row>    <!-- Success Modal -->
     <v-dialog v-model="showSuccessModal" persistent max-width="400">
       <v-card>
         <v-card-title class="headline text-light-green-darken-3">Success</v-card-title>
@@ -223,5 +226,22 @@ window.addEventListener('profile-updated', fetchPostsWithUsers)
 </template>
 
 <style scoped>
-/* Add any custom styles here */
+.post-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.post-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+}
+
+.post-header {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 1));
+}
+
+.post-image {
+  background-color: #f5f5f5;
+}
 </style>

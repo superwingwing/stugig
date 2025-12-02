@@ -70,91 +70,124 @@ window.addEventListener('profile-updated', fetchUserDetails)
 </script>
 
 <template>
-  <v-navigation-drawer
-    class="bg-light-green-darken-3 rounded-e-xl pa-6"
-    :width="350"
-    elevation="16"
-    :model-value="modelValue"
-    :permanent="permanent"
-    @update:modelValue="emit('update:modelValue', $event)"
-  >
-    <v-list color="transparent">
-      <v-list class="text-center">
-        <div class="profile-section">
-          <v-avatar size="150" class="mx-auto" color="white">
-            <!-- If profile_pic exists and is not null or empty, or if it's a file name -->
-            <v-img
-               v-if="profile_pic && typeof profile_pic === 'string' && profile_pic !== '' && profile_pic !== null"
-                      :src="profile_pic.startsWith('http') ? profile_pic : profileUrl + profile_pic"
-                      alt="User Avatar"
-                      class="mx-auto"
-                      height="200"
-                      width="200"
-                />
-            <!-- Fallback image if profile_pic is not provided or is invalid -->
-            <v-img
-              v-else
-              :src="avatar_url"
-              alt="User Avatar"
-              class="mx-auto"
-              height="200"
-              width="200"
-            />
-          </v-avatar>
-          <p class="text-center font-weight-bold mt-2">{{ firstName && lastName ? firstName + ' ' + lastName : full_name }}</p>
-        </div>
-      </v-list>
+  <div class="side-nav-card rounded-xl shadow-lg overflow-hidden h-full">
+    <!-- Profile Section -->
+    <div class="profile-header text-center py-6 px-4">
+      <v-img src="/images/logo.png" max-width="60" contain class="mx-auto mb-2" />
+      <v-avatar size="80" class="mx-auto mb-2 elevation-4" color="white">
+        <v-img
+          v-if="profile_pic && typeof profile_pic === 'string' && profile_pic !== '' && profile_pic !== null"
+          :src="profile_pic.startsWith('http') ? profile_pic : profileUrl + profile_pic"
+          alt="User Avatar"
+          cover
+        />
+        <v-img
+          v-else
+          :src="avatar_url"
+          alt="User Avatar"
+          cover
+        />
+      </v-avatar>
+      <h3 class="text-white font-weight-bold text-h6 mb-1">
+        {{ firstName && lastName ? firstName + ' ' + lastName : full_name }}
+      </h3>
+    </div>
 
-      <v-list-item @click="navigateTo('search')">
-        <v-btn class="rounded-pill text-light-green-darken-3" append-icon="mdi-magnify" block>
-          Search
-        </v-btn>
-      </v-list-item>
+    <!-- Search Button -->
+    <div class="px-3 mb-2 mt-2">
+      <v-btn
+        @click="navigateTo('search')"
+        prepend-icon="mdi-magnify"
+        block
+        rounded="lg"
+        color="white"
+        variant="flat"
+        class="text-green-darken-3 font-weight-bold shadow-md"
+      >
+        Search
+      </v-btn>
+    </div>
+
+    <!-- Navigation Menu -->
+    <v-list class="bg-transparent px-2" color="transparent">
       <v-list-item
         @click="navigateTo('dashboard')"
-        :class="{ 'active-item': currentRoute === 'dashboard' }"
+        :class="{ 'nav-item-active': currentRoute === 'dashboard' }"
+        class="nav-item rounded-lg mb-1"
+        prepend-icon="mdi-home"
       >
-        <v-list-item-title class="text-center">Home</v-list-item-title>
+        <v-list-item-title class="text-white font-weight-medium">Home</v-list-item-title>
       </v-list-item>
-      <v-list-item @click="navigateTo('save')" :class="{ 'active-item': currentRoute === 'save' }">
-        <v-list-item-title class="text-center">Saved</v-list-item-title>
+      
+      <v-list-item
+        @click="navigateTo('save')"
+        :class="{ 'nav-item-active': currentRoute === 'save' }"
+        class="nav-item rounded-lg mb-1"
+        prepend-icon="mdi-bookmark"
+      >
+        <v-list-item-title class="text-white font-weight-medium">Saved</v-list-item-title>
       </v-list-item>
+      
       <v-list-item
         @click="navigateTo('profile')"
-        :class="{ 'active-item': currentRoute === 'profile' }"
+        :class="{ 'nav-item-active': currentRoute === 'profile' }"
+        class="nav-item rounded-lg mb-1"
+        prepend-icon="mdi-account"
       >
-        <v-list-item-title class="text-center">Profile</v-list-item-title>
+        <v-list-item-title class="text-white font-weight-medium">Profile</v-list-item-title>
       </v-list-item>
+      
       <v-list-item
         @click="navigateTo('about')"
-        :class="{ 'active-item': currentRoute === 'about' }"
+        :class="{ 'nav-item-active': currentRoute === 'about' }"
+        class="nav-item rounded-lg mb-1"
+        prepend-icon="mdi-information"
       >
-        <v-list-item-title class="text-center">About CSULF</v-list-item-title>
+        <v-list-item-title class="text-white font-weight-medium">About CSULF</v-list-item-title>
       </v-list-item>
     </v-list>
 
-    <template v-slot:append>
-      <div class="pa-2">
-        <v-btn
-          class="rounded-pill text-light-green-darken-3 font-weight-black"
-          block
-          @click="onLogout"
-        >
-          Sign out
-        </v-btn>
-      </div>
-    </template>
-  </v-navigation-drawer>
+    <!-- Logout Button -->
+    <div class="pa-4 mb-4 mt-auto">
+      <v-btn
+        @click="onLogout"
+        prepend-icon="mdi-logout"
+        block
+        rounded="lg"
+        color="white"
+        variant="flat"
+        class="text-green-darken-3 font-weight-bold shadow-md"
+      >
+        Sign Out
+      </v-btn>
+    </div>
+  </div>
 </template>
 
 <style scoped>
-.active-item {
-  background-color: rgba(255, 255, 255, 0.196);
-  padding: 0.5rem 1rem;
-  transition: background-color 0.3s ease;
+.side-nav-card {
+  background: linear-gradient(180deg, #2e7d32 0%, #1b5e20 100%);
+  display: flex;
+  flex-direction: column;
 }
 
-.active-item:hover {
-  background-color: rgba(255, 255, 255, 0.3);
+.profile-header {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nav-item {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.nav-item-active {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 </style>
